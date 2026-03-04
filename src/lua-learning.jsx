@@ -545,22 +545,22 @@ local function reduce(t, fn, initial)
   -- Fold the table with fn(accumulator, value)
 end
 
--- BONUS: Implement pipe() that chains operations:
--- pipe(data, fn1, fn2, fn3) = fn3(fn2(fn1(data)))
+-- pipe() chains operations: pipe(data, fn1, fn2, fn3) = fn3(fn2(fn1(data)))
 local function pipe(value, ...)
   -- Apply each function in sequence to the value
 end
 
--- Now solve this using your functions:
--- Given a list of numbers 1-20, find the sum of
--- squares of all numbers divisible by 3.
--- Expected: 9 + 36 + 81 + 144 + 225 + 324 = 819
-
+-- Test: sum of squares of numbers 1-20 divisible by 3. Expected: 819
 local numbers = {}
 for i = 1, 20 do table.insert(numbers, i) end
 
--- local result = pipe(numbers, ???, ???, ???)
--- print(result)  -- should print 819`,
+local result = pipe(numbers,
+  function(t) return filter(t, function(x) return x % 3 == 0 end) end,
+  function(t) return map(t, function(x) return x * x end) end,
+  function(t) return reduce(t, function(a, b) return a + b end, 0) end
+)
+
+print(result)  -- should print 819`,
       solution: `local function map(t, fn)
   local result = {}
   for i, v in ipairs(t) do
@@ -2525,7 +2525,7 @@ function LessonView({ lesson, onBack, onProgressChange }) {
       {/* Content */}
       <div ref={contentRef} style={{
         flex: 1, overflow: "auto", padding: "24px 32px",
-        maxWidth: 800, width: "100%", margin: "0 auto", boxSizing: "border-box",
+        maxWidth: "min(960px, 92vw)", width: "100%", margin: "0 auto", boxSizing: "border-box",
       }}>
         {lesson.concepts.map((concept, i) => (
           <div key={i} style={{ marginBottom: 32 }}>
@@ -2632,7 +2632,7 @@ export default function LuaLearningApp() {
           Learn Lua for Roblox
         </h1>
         <p style={{
-          color: theme.textMuted, maxWidth: 520, margin: "0 auto", fontSize: 15,
+          color: theme.textMuted, maxWidth: "min(560px, 90vw)", margin: "0 auto", fontSize: 15,
           lineHeight: 1.6,
         }}>
           8 lessons designed for experienced developers.
@@ -2662,7 +2662,7 @@ export default function LuaLearningApp() {
 
       {/* Lesson Cards */}
       <div style={{
-        maxWidth: 680, margin: "0 auto", padding: "24px 24px 64px",
+        maxWidth: "min(720px, 92vw)", width: "100%", margin: "0 auto", padding: "24px 24px 64px", boxSizing: "border-box",
       }}>
         {LESSONS.map((lesson, i) => (
           <button key={lesson.id} onClick={() => setActiveLesson(lesson)} style={{
@@ -2731,7 +2731,7 @@ export default function LuaLearningApp() {
 
       {/* Reset progress */}
       <div style={{
-        maxWidth: 680, margin: "0 auto", padding: "0 24px 32px", textAlign: "center",
+        maxWidth: "min(720px, 92vw)", width: "100%", margin: "0 auto", padding: "0 24px 32px", boxSizing: "border-box", textAlign: "center",
       }}>
         <button
           onClick={clearAllProgress}
